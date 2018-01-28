@@ -17,24 +17,26 @@ public class ControllerMovement : MonoBehaviour {
 	Rigidbody rigidBody;
 	Vector2 inputMovement;
 	Vector2 movementNormalized;
+	float sprint;
 
 	void Awake() {
+		Cursor.lockState = CursorLockMode.Locked;
 		if (!cam) {
 			cam = Camera.main;
 		}
 		rigidBody = GetComponent<Rigidbody>();
 	}
 
-	void FixedUpdate() {
+	void Update() {
 		inputMovement = new Vector2(Input.GetAxis(horizontalAxis), Input.GetAxis(verticalAxis));
 		movementNormalized = inputMovement.normalized;
-		var sprint = Input.GetButton(sprintButton) ? sprintMultiplier : 1;
+		sprint = Input.GetButton(sprintButton) ? sprintMultiplier : 1;
 		rigidBody.velocity = new Vector3(0, rigidBody.velocity.y, 0);
 
 		if (movementNormalized.magnitude > 0) {
 			Vector3 movement = new Vector3(cam.transform.forward.x, 0, cam.transform.forward.z) * inputMovement.y
 			                 + new Vector3(cam.transform.right.x, 0, cam.transform.right.z) * inputMovement.x;
-			rigidBody.AddForce(movement.normalized * speed * sprint * 10, ForceMode.Force);
+			rigidBody.AddForce(movement.normalized * speed * sprint * Time.deltaTime, ForceMode.Impulse);
 		}
 
 		if (Input.GetButtonDown(jumpButton) && IsGrounded()) {
@@ -44,6 +46,10 @@ public class ControllerMovement : MonoBehaviour {
 			Cursor.lockState = CursorLockMode.None;
 			Cursor.lockState = CursorLockMode.Locked;
 		}
+	}
+
+	void MoveInDirection(float x, float y, float z) {
+		
 	}
 
 	bool IsGrounded() {

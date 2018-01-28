@@ -14,7 +14,12 @@ ModelImporter:
     6400000: //RootNode
     7400000: Default Take
     9500000: //RootNode
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: WallMaterial__WallTexture_png
+    second: {fileID: 2100000, guid: 3ec9c91ba7e611f46b4322d98bc0daf6, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
